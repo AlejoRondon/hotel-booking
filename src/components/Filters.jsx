@@ -1,5 +1,23 @@
 import React, { useEffect } from 'react'
+import styled, { css } from 'styled-components'
 import { getYYYYMMDD, addDays } from '../utils/dateHelpers.js'
+
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+
+  ${props =>
+    props.primary &&
+    css`
+      background: palevioletred;
+      color: white;
+    `};
+`
+
 export function Filters(props) {
   const today = new Date()
 
@@ -54,15 +72,15 @@ export function Filters(props) {
   }
 
   return (
-    <nav>
+    <nav className='bg-blue-700'>
       {/* <div className='bg-blue-700 container mx-auto flex justify-evenly py-6'> */}
-      <form className='bg-blue-700 container mx-auto flex justify-evenly py-6'>
+      <form className=' container mx-auto flex justify-evenly py-6'>
         <input onChange={filtersChangeHandler} className='rounded-lg' type='date' name='fromDate' value={getYYYYMMDD(filtersState.fromDate)} min={getYYYYMMDD(today)} max={getYYYYMMDD(addDays(today, 60))} />
 
         <input onChange={filtersChangeHandler} className='rounded-lg' type='date' name='toDate' value={getYYYYMMDD(filtersState.toDate)} min={getYYYYMMDD(addDays(filtersState.fromDate, 1))} max={getYYYYMMDD(addDays(today, 60))} />
 
         <select name='country' className='rounded-lg' value={filtersState.country} onChange={filtersChangeHandler}>
-          <option selected>{filtersState.country}</option>
+          <option selected>All countries</option>
           {props.countries.map((country, index) => {
             return <option value={country}>{country}</option>
           })}
@@ -80,9 +98,9 @@ export function Filters(props) {
             return <option value={size}>{size}</option>
           })}
         </select>
-        <button className='bg-white rounded-lg p-2' onClick={resetHandler}>
+        <Button primary className='bg-white rounded-lg p-2' onClick={resetHandler}>
           Reset
-        </button>
+        </Button>
       </form>
       {/* </div> */}
     </nav>

@@ -13,7 +13,7 @@ import React from 'react'
 
 function Hotel(props) {
   return (
-    <div className='bg-purple-200 my-4 flex h-72'>
+    <div className='bg-purple-200 my-4 flex flex-col rounded-2xl overflow-hidden'>
       <img src={props.photo}></img>
       <div className='p-3'>
         <p>

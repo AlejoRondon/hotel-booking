@@ -14,7 +14,7 @@ import Hotel from './Hotel'
 
 function Hotels(props) {
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
       {props.hotels.map(hotel => {
         return (
           <Hotel

@@ -3,7 +3,20 @@ import { hotelsDataDB } from './data.js'
 import Filters from './components/Filters'
 import React, { useState } from 'react'
 import Hotels from './components/Hotels'
+import translate from 'google-translate-open-api'
+
+// async function translateSome(some2Translate) {
+//   const result = await translate(some2Translate, {
+//     tld: 'cn',
+//     to: 'zh-CN',
+//   })
+//   const data = result.data[0]
+//   console.log('traslated: ' + data)
+//   return data
+// }
 function App() {
+  // translateSome('hola')
+
   const [filteredHotelList, setFilteredHotelList] = useState(hotelsDataDB)
   const [headerText, setHeaderText] = useState('Use the next filters to find your the perfect hotel to enjoy your vacations')
   //Getting all countries
@@ -59,7 +72,7 @@ function App() {
     }
 
     let headerTextComposition = `
-    Now, you're looking at the ${updatedFilteredHotelList.length} available ${filters.size === 'All sizes' ? '' : filters.size} hotels between ${filters.fromDate.toLocaleDateString()} and 
+    Now, you're looking at the ${updatedFilteredHotelList.length} available ${filters.size === 'All sizes' ? '' : filters.size} hotels between ${filters.fromDate.toLocaleDateString()} and
     ${filters.toDate.toLocaleDateString()}
     ${filters.country === 'All countries' ? '' : `, that are located in ${filters.country}`}
     ${filters.price === 'All prices' ? '' : `, with price ${'$'.repeat(filters.price)}`}`
@@ -70,7 +83,7 @@ function App() {
   return (
     <>
       <header className='bg-green-100'>
-        <div className='bg-purple-100 container mx-auto py-14'>
+        <div className='container mx-auto py-14'>
           <h1 className='text-4xl font-bold'>Bookining</h1>
           <h1 className='text-2xl font-bold'>Happy hotel reservation & vacations</h1>
           <br />
