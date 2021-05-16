@@ -5,16 +5,16 @@ export function Filters(props) {
 
   const [filtersState, setFiltersState] = React.useState({
     fromDate: today,
-    toDate: addDays(today, 2),
+    toDate: addDays(today, 1),
     country: 'All countries',
     price: 'All prices',
     size: 'All sizes',
   })
-  useEffect(() => {
-    // console.log('*****')
-    // props.onFiltersChange(filtersState)
-    // document.title = `You clicked ${count} times`;
-  })
+  // useEffect(() => {
+  // console.log('*****')
+  // props.onFiltersChange(filtersState)
+  // document.title = `You clicked ${count} times`;
+  // })
   const filtersChangeHandler = ev => {
     let updatedFiltersState = { ...filtersState }
     // console.log(ev.target.name + '->' + ev.target.value)
@@ -42,34 +42,49 @@ export function Filters(props) {
     // console.log(updatedFiltersState)
     props.onFiltersChange(updatedFiltersState)
   }
+  const resetHandler = ev => {
+    setFiltersState({
+      fromDate: today,
+      toDate: addDays(today, 1),
+      country: 'All countries',
+      price: 'All prices',
+      size: 'All sizes',
+    })
+    props.onFiltersChange({})
+  }
 
   return (
     <nav>
-      <div className='bg-blue-700 container mx-auto flex justify-evenly py-6'>
+      {/* <div className='bg-blue-700 container mx-auto flex justify-evenly py-6'> */}
+      <form className='bg-blue-700 container mx-auto flex justify-evenly py-6'>
         <input onChange={filtersChangeHandler} className='rounded-lg' type='date' name='fromDate' value={getYYYYMMDD(filtersState.fromDate)} min={getYYYYMMDD(today)} max={getYYYYMMDD(addDays(today, 60))} />
 
         <input onChange={filtersChangeHandler} className='rounded-lg' type='date' name='toDate' value={getYYYYMMDD(filtersState.toDate)} min={getYYYYMMDD(addDays(filtersState.fromDate, 1))} max={getYYYYMMDD(addDays(today, 60))} />
 
-        <select name='country' className='rounded-lg' onChange={filtersChangeHandler}>
-          <option selected>All countries</option>
+        <select name='country' className='rounded-lg' value={filtersState.country} onChange={filtersChangeHandler}>
+          <option selected>{filtersState.country}</option>
           {props.countries.map((country, index) => {
             return <option value={country}>{country}</option>
           })}
         </select>
 
-        <select name='price' className='rounded-lg' onChange={filtersChangeHandler}>
+        <select name='price' className='rounded-lg' value={filtersState.price} onChange={filtersChangeHandler}>
           <option selected>All prices</option>
           {props.prices.map((price, index) => {
             return <option value={index + 1}>{price}</option>
           })}
         </select>
-        <select name='size' className='rounded-lg' onChange={filtersChangeHandler}>
+        <select name='size' className='rounded-lg' value={filtersState.size} onChange={filtersChangeHandler}>
           <option selected>All sizes</option>
           {props.sizes.map((size, index) => {
             return <option value={size}>{size}</option>
           })}
         </select>
-      </div>
+        <button className='bg-white rounded-lg p-2' onClick={resetHandler}>
+          Reset
+        </button>
+      </form>
+      {/* </div> */}
     </nav>
   )
 }

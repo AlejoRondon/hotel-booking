@@ -1,11 +1,12 @@
 import './App.css'
 import { hotelsDataDB } from './data.js'
 import Filters from './components/Filters'
-import React from 'react'
+import React, { useState } from 'react'
 import Hotels from './components/Hotels'
 function App() {
-  const [filteredHotelList, setFilteredHotelList] = React.useState(hotelsDataDB)
-  //Filter all countries
+  const [filteredHotelList, setFilteredHotelList] = useState(hotelsDataDB)
+  const [headerText, setHeaderText] = useState('Use the next filters to find your the perfect hotel to enjoy your vacations')
+  //Getting all countries
   let countriesList = hotelsDataDB.map(hotel => {
     return hotel.country
   })
@@ -13,7 +14,7 @@ function App() {
   countriesList = countriesList.filter(function (country, index) {
     return countriesList.indexOf(country) == index
   })
-  console.log(countriesList)
+  // console.log(countriesList)
 
   const filtersChangeHandler = newFilteredValues => {
     console.log('New filtered values: ')
@@ -21,10 +22,23 @@ function App() {
     applyFilters(newFilteredValues)
   }
   const applyFilters = filters => {
+    //Checking if filters is empty ===> Filters were resetted
+    if (filters && Object.keys(filters).length === 0 && filters.constructor === Object) {
+      console.log('Filters is empty(Filters were resetted) - All hotels list will be showed')
+      setHeaderText('Use the next filters to find your the perfect hotel to enjoy your vacations')
+      setFilteredHotelList(hotelsDataDB)
+      return
+    }
+    //Converting rooms in Size for each hotel
     let updatedFilteredHotelList = hotelsDataDB.map(hotel => {
       return { ...hotel, size: hotel.rooms <= 10 ? 'Small' : hotel.rooms > 10 && hotel.rooms <= 20 ? 'Medium' : 'Large' }
     })
-    console.log(updatedFilteredHotelList)
+    // console.log(updatedFilteredHotelList)
+
+    updatedFilteredHotelList = updatedFilteredHotelList.filter(hotel => {
+      return filters.fromDate.valueOf() > hotel.availabilityFrom === filters.toDate.valueOf() < hotel.availabilityTo
+    })
+
     if (filters.country.indexOf('All countries') === -1) {
       console.log('Applying country filter: ' + filters.country)
       updatedFilteredHotelList = updatedFilteredHotelList.filter(hotel => {
@@ -43,14 +57,24 @@ function App() {
         return hotel.size === filters.size
       })
     }
+
+    let headerTextComposition = `
+    Now, you're looking at the ${updatedFilteredHotelList.length} available ${filters.size === 'All sizes' ? '' : filters.size} hotels between ${filters.fromDate.toLocaleDateString()} and 
+    ${filters.toDate.toLocaleDateString()}
+    ${filters.country === 'All countries' ? '' : `, that are located in ${filters.country}`}
+    ${filters.price === 'All prices' ? '' : `, with price ${'$'.repeat(filters.price)}`}`
+    setHeaderText(headerTextComposition)
+
     setFilteredHotelList(updatedFilteredHotelList)
   }
   return (
     <>
       <header className='bg-green-100'>
         <div className='bg-purple-100 container mx-auto py-14'>
-          <h1 className='text-2xl font-bold'>Hoteles</h1>
-          <p className='text-xl'>Desde el martes 1 de enero de 2019 hasta el miércoles 2 de enero de 2019</p>
+          <h1 className='text-4xl font-bold'>Bookining</h1>
+          <h1 className='text-2xl font-bold'>Happy hotel reservation & vacations</h1>
+          <br />
+          <p className='text-xl'>{headerText}</p>
         </div>
       </header>
       <Filters onFiltersChange={filtersChangeHandler} countries={countriesList} prices={['$', '$$', '$$$', '$$$$']} sizes={['Small', 'Medium', 'Large']}></Filters>

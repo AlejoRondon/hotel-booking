@@ -26,10 +26,10 @@ function Hotel(props) {
           <strong>description:</strong> {props.description}
         </p>
         <p>
-          <strong>availabilityFrom:</strong> {props.availabilityFrom}
+          <strong>availabilityFrom:</strong> {new Date(props.availabilityFrom).toLocaleDateString()}
         </p>
         <p>
-          <strong>availabilityTo:</strong> {props.availabilityTo}
+          <strong>availabilityTo:</strong> {new Date(props.availabilityTo).toLocaleDateString()}
         </p>
         <p>
           <strong>rooms:</strong> {props.rooms}
