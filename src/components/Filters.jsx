@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getYYYYMMDD, addDays } from '../utils/dateHelpers.js'
 export function Filters(props) {
   const today = new Date()
@@ -6,11 +6,15 @@ export function Filters(props) {
   const [filtersState, setFiltersState] = React.useState({
     fromDate: today,
     toDate: addDays(today, 2),
-    country: null,
-    price: null,
-    size: null,
+    country: 'All countries',
+    price: 'All prices',
+    size: 'All sizes',
   })
-
+  useEffect(() => {
+    // console.log('*****')
+    // props.onFiltersChange(filtersState)
+    // document.title = `You clicked ${count} times`;
+  })
   const filtersChangeHandler = ev => {
     let updatedFiltersState = { ...filtersState }
     // console.log(ev.target.name + '->' + ev.target.value)
@@ -56,7 +60,7 @@ export function Filters(props) {
         <select name='price' className='rounded-lg' onChange={filtersChangeHandler}>
           <option selected>All prices</option>
           {props.prices.map((price, index) => {
-            return <option value={price}>{price}</option>
+            return <option value={index + 1}>{price}</option>
           })}
         </select>
         <select name='size' className='rounded-lg' onChange={filtersChangeHandler}>
