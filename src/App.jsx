@@ -14,7 +14,8 @@ function App() {
   console.log(countriesList)
 
   const filtersChangeHandler = newFilteredValues => {
-    console.log('New filtered values: ' + newFilteredValues)
+    console.log('New filtered values: ')
+    console.log(newFilteredValues)
   }
   return (
     <>
