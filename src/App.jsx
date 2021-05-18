@@ -5,20 +5,11 @@ import React, { useState } from 'react'
 import Hotels from './components/Hotels'
 import translate from 'google-translate-open-api'
 
-// async function translateSome(some2Translate) {
-//   const result = await translate(some2Translate, {
-//     tld: 'cn',
-//     to: 'zh-CN',
-//   })
-//   const data = result.data[0]
-//   console.log('traslated: ' + data)
-//   return data
-// }
-function App() {
-  // translateSome('hola')
+import styled, { css } from 'styled-components'
 
+function App() {
   const [filteredHotelList, setFilteredHotelList] = useState(hotelsDataDB)
-  const [headerText, setHeaderText] = useState('Use the next filters to find your the perfect hotel to enjoy your vacations')
+  const [headerText, setHeaderText] = useState('Use filters to find your the perfect hotel to enjoy your vacations')
   //Getting all countries
   let countriesList = hotelsDataDB.map(hotel => {
     return hotel.country
@@ -38,7 +29,7 @@ function App() {
     //Checking if filters is empty ===> Filters were resetted
     if (filters && Object.keys(filters).length === 0 && filters.constructor === Object) {
       console.log('Filters is empty(Filters were resetted) - All hotels list will be showed')
-      setHeaderText('Use the next filters to find your the perfect hotel to enjoy your vacations')
+      setHeaderText('Use filters to find your the perfect hotel to enjoy your vacations')
       setFilteredHotelList(hotelsDataDB)
       return
     }

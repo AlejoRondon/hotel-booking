@@ -1,27 +1,36 @@
 import React from 'react'
+import styled, { css } from 'styled-components'
 
-// slug: 'la-bamba-de-areco',
-// name: 'La Bamba de Areco',
-// photo: './images/la-bamba-de-areco.jpg',
-// description: 'La Bamba de Areco está ubicada en San Antonio de Areco, en el corazón de la pampa. Es una de las estancias más antiguas de la Argentina, recientemente restaurada para ofrecer a sus huéspedes todo el confort y esplendor colonial.',
-// availabilityFrom: today.valueOf(),
-// availabilityTo: today.valueOf() + 864000000, // 10 days
-// rooms: 11,
-// city: 'Buenos Aires',
-// country: 'Argentina',
-// price: 4,
+const Header = styled.header`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`
+// const HotelTitle = (props)=>{
 
+// }
+const HotelTitle = styled.h1`
+  /* background-color: red; */
+  font-family: 'Coiny', cursive;
+  font-size: 1.5rem;
+`
 function Hotel(props) {
   return (
-    <div className='bg-purple-200 my-4 flex flex-col rounded-2xl overflow-hidden'>
+    <div className='bg-purple-50 m-4 flex flex-col rounded-2xl overflow-hidden'>
       <img src={props.photo}></img>
       <div className='p-3'>
+        <HotelTitle>{props.name}</HotelTitle>
         <p>
           <strong>slug:</strong> {props.slug}
         </p>
-        <p>
+        {/* <p>
           <strong>name:</strong> {props.name}
-        </p>
+        </p> */}
         <p>
           <strong>description:</strong> {props.description}
         </p>
